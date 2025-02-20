@@ -1,1 +1,1 @@
-# clean_architecture_go
+# Clean Architecture in Golang
