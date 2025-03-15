@@ -20,7 +20,7 @@ jobs:
     - name: 🛠️ Set up Go
       uses: actions/setup-go@v5
       with:
-        go-version: '1.22' # Replace with your Go version 😎
+        go-version: '1.24' # Replace with your Go version 😎
         cache: true # Enable caching for faster builds 🚀
 
     # Step 3: Install formatting tools ✂️
