@@ -3,12 +3,10 @@ name: Go Code Quality 🧪
 # Trigger the workflow on push or pull request events for all branches
 on:
   pull_request:
-    branches:
-    - main # Matches all branches 🌍
+    branches: [ "main" ] # Matches all branches 🌍
 
 jobs:
   code-quality:
-    name: Code Quality
     runs-on: ubuntu-latest
 
     steps:
