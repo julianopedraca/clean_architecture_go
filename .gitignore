@@ -1,0 +1,101 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin/
+dist/
+
+# Build output directories
+build/
+out/
+
+# Dependency directories (if using vendor/)
+vendor/
+
+# Go module cache
+# Note: If you're using Go modules, the module cache is stored in $GOPATH/pkg/mod and usually doesn't need to be ignored.
+# However, if you have local overrides, you might see these directories.
+mod/
+
+# Test and coverage files
+*.test
+*.out
+coverage/
+cover.out
+profile.out
+
+# Go workspace file
+go.work
+
+# Dependency lock files (optional)
+# If you're using Go modules, you typically want to commit go.mod and go.sum.
+# If you don't want to track certain lock files, uncomment the following:
+# go.sum
+
+# Editor and IDE files
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Visual Studio Code
+.vscode/
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# JetBrains GoLand
+*.idea/
+
+# macOS-specific files
+.DS_Store
+
+# Vim/Neovim swap files
+*.swp
+*.swo
+
+# Logs and temporary files
+*.log
+log/
+logs/
+tmp/
+temp/
+
+# Environment variables and secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.key
+*.pem
+*.crt
+*.cert
+
+# OS-generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Documentation generation output
+docs/_build/
+site/
+
+# Database files
+*.db
+*.sqlite3
+
+# Test fixtures and mocks
+mock/
+fixtures/
+
+# Coverage reports
+htmlcov/
+cov/
+
+# Debugging and profiling
+*.prof
+*.pprof
+
+# Custom project-specific ignores
+# Add any custom patterns specific to your project here
