@@ -35,8 +35,8 @@ func (s *SptransApi) Authentication() ([]byte, error) {
 	return respBody, nil
 }
 
-func (s *SptransApi) SearchLine(lineNumber int) ([]byte, error) {
-	url := fmt.Sprintf("%s/Linha/Buscar?termosBusca=%d", os.Getenv("API_URL"), lineNumber)
+func (s *SptransApi) SearchLine(line string) ([]byte, error) {
+	url := fmt.Sprintf("%s/Linha/Buscar?termosBusca=%s", os.Getenv("API_URL"), line)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		slog.Error("Failed to create request", "error", err.Error())
