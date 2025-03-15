@@ -1,0 +1,86 @@
+name: Go Code Quality 🧪
+
+# Trigger the workflow on push or pull request events for all branches
+on:
+  push:
+    branches: [ "**" ] # Matches all branches 🌍
+  pull_request:
+    branches: [ "**" ] # Matches all branches 🌍
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository 📂
+    - name: 📂 Checkout code
+      uses: actions/checkout@v4
+
+    # Step 2: Set up Go environment 🛠️
+    - name: 🛠️ Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.22' # Replace with your Go version 😎
+        cache: true # Enable caching for faster builds 🚀
+
+    # Step 3: Install formatting tools ✂️
+    - name: ✂️ Install formatting tools
+      run: go install golang.org/x/tools/cmd/goimports@latest
+
+    # Step 4: Check formatting with gofmt 📝 (fail if not formatted correctly)
+    - name: 📝 Check formatting with gofmt
+      run: |
+        diff=$(gofmt -s -d .)
+        if [ -n "$diff" ]; then
+          echo "❌ Uh-oh! Code is not formatted with gofmt. Here’s the diff:"
+          echo "$diff"
+          echo "💡 Please run 'gofmt -s -w .' locally to format your code and try again! 😊"
+          exit 1
+        else
+          echo "✅ Looking good! Code is formatted with gofmt. 🎉"
+        fi
+
+    # Step 5: Check import organization with goimports 📚 (fail if not organized correctly)
+    - name: 📚 Check imports with goimports
+      run: |
+        diff=$(goimports -d .)
+        if [ -n "$diff" ]; then
+          echo "❌ Oops! Imports are not organized with goimports. Here’s the diff:"
+          echo "$diff"
+          echo "💡 Please run 'goimports -w .' locally to organize imports and try again! 😊"
+          exit 1
+        else
+          echo "✅ Nice work! Imports are organized with goimports. 🎉"
+        fi
+
+    # Step 6: Run go vet for basic static analysis 🔍 (fail if issues are found)
+    - name: 🔍 Run go vet
+      run: |
+        echo "🔍 Checking for issues with go vet..."
+        go vet ./...
+        echo "✅ No issues found with go vet! 🎉"
+
+    # Step 7: Install and run staticcheck for advanced linting 🕵️ (fail if issues are found)
+    - name: 🕵️ Install staticcheck
+      run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+    - name: 🕵️ Run staticcheck
+      run: |
+        echo "🕵️ Running staticcheck for advanced linting..."
+        staticcheck ./...
+        echo "✅ No issues found with staticcheck! 🎉"
+
+    # Step 8: Run tests with coverage 🧪 (fail if tests fail)
+    - name: 🧪 Run tests
+      run: |
+        echo "🧪 Running tests with coverage..."
+        go test -v -coverprofile=cover.out ./...
+        echo "✅ All tests passed! Great job! 🎉"
+
+    # Step 9: Upload coverage report 📊 (optional, won't fail if upload fails)
+    - name: 📊 Upload coverage report
+      if: success() # Only run if previous steps succeeded ✅
+      uses: codecov/codecov-action@v4
+      with:
+        files: ./cover.out
+        fail_ci_if_error: false # Won't fail the pipeline if upload fails 🙈
