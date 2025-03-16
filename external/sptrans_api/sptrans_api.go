@@ -5,10 +5,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"julianopedraca/clean_architecture_go/interfaces"
 	"log/slog"
 	"net/http"
 	"os"
 )
+
+type ResponseWrapper struct {
+	Response []interfaces.BusLine
+}
 
 type SptransApi struct {
 	cookies []*http.Cookie
@@ -35,7 +40,7 @@ func (s *SptransApi) Authentication() ([]byte, error) {
 	return respBody, nil
 }
 
-func (s *SptransApi) SearchLine(line string) ([]byte, error) {
+func (s *SptransApi) SearchLine(line string) ([]interfaces.BusLine, error) {
 	url := fmt.Sprintf("%s/Linha/Buscar?termosBusca=%s", os.Getenv("API_URL"), line)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -59,6 +64,12 @@ func (s *SptransApi) SearchLine(line string) ([]byte, error) {
 		slog.Error("Failed to parse io.ReadAll", "error", err.Error())
 		return nil, err
 	}
-	return respBody, nil
 
+	var busLines []interfaces.BusLine
+	err = json.Unmarshal(respBody, &busLines)
+	if err != nil {
+		slog.Error("Failed to unmarshal respBody", "error", err.Error())
+		return nil, err
+	}
+	return busLines, nil
 }

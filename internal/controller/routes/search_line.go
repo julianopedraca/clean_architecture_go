@@ -15,5 +15,5 @@ func SearchLine(c *gin.Context, api apiInterface.SptransApiInterface, line strin
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"response": string(respBody)})
+	c.JSON(http.StatusOK, gin.H{"response": respBody})
 }
