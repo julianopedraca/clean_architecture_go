@@ -4,15 +4,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
 	"julianopedraca/clean_architecture_go/interfaces"
+	utils "julianopedraca/clean_architecture_go/utils"
 	"log/slog"
 	"net/http"
 	"os"
 )
 
 type ResponseWrapper struct {
-	Response []interfaces.BusLine
+	Response []interfaces.SearchLine
 }
 
 type SptransApi struct {
@@ -32,44 +32,51 @@ func (s *SptransApi) Authentication() ([]byte, error) {
 	defer resp.Body.Close()
 	s.cookies = resp.Cookies()
 
-	respBody, err := io.ReadAll(resp.Body)
-	if err != nil {
-		slog.Error("Failed to parse io.ReadAll", "error", err.Error())
-		return nil, err
-	}
+	respBody := utils.GetBodyFromHttpResponse(resp.Body)
 	return respBody, nil
 }
 
-func (s *SptransApi) SearchLine(line string) ([]interfaces.BusLine, error) {
+func (s *SptransApi) SearchLine(line string) ([]interfaces.SearchLine, error) {
 	url := fmt.Sprintf("%s/Linha/Buscar?termosBusca=%s", os.Getenv("API_URL"), line)
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		slog.Error("Failed to create request", "error", err.Error())
-		return nil, err
-	}
-
-	for _, cookie := range s.cookies {
-		req.AddCookie(cookie)
-	}
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		slog.Error("Failed to make GET request", "error", err.Error())
-		return nil, err
-	}
+	resp := utils.NewGetRequestWithCookies(url, s.cookies)
 	defer resp.Body.Close()
+	respBody := utils.GetBodyFromHttpResponse(resp.Body)
 
-	respBody, err := io.ReadAll(resp.Body)
-	if err != nil {
-		slog.Error("Failed to parse io.ReadAll", "error", err.Error())
-		return nil, err
-	}
+	var response []interfaces.SearchLine
+	utils.ParseJsonBody(respBody, &response)
+	return response, nil
+}
 
-	var busLines []interfaces.BusLine
-	err = json.Unmarshal(respBody, &busLines)
-	if err != nil {
-		slog.Error("Failed to unmarshal respBody", "error", err.Error())
-		return nil, err
-	}
-	return busLines, nil
+func (s *SptransApi) SearchLineDirection(line string, direction string) ([]interfaces.SearchLine, error) {
+	url := fmt.Sprintf("%s/Linha/BuscarLinhaSentido?termosBusca=%s&sentido=%s", os.Getenv("API_URL"), line, direction)
+	resp := utils.NewGetRequestWithCookies(url, s.cookies)
+	defer resp.Body.Close()
+	respBody := utils.GetBodyFromHttpResponse(resp.Body)
+
+	var response []interfaces.SearchLine
+	utils.ParseJsonBody(respBody, &response)
+	return response, nil
+}
+
+func (s *SptransApi) SearchStops(stop string) ([]interfaces.SearchStop, error) {
+	url := fmt.Sprintf("%s/Parada/Buscar?termosBusca=%s", os.Getenv("API_URL"), stop)
+	resp := utils.NewGetRequestWithCookies(url, s.cookies)
+	defer resp.Body.Close()
+	respBody := utils.GetBodyFromHttpResponse(resp.Body)
+
+	var response []interfaces.SearchStop
+	utils.ParseJsonBody(respBody, &response)
+	return response, nil
+}
+
+func (s *SptransApi) SearchStopsByLine(line string) ([]interfaces.SearchStop, error) {
+	url := fmt.Sprintf("%s/Parada/BuscarParadasPorLinha?codigoLinha=%s", os.Getenv("API_URL"), line)
+
+	resp := utils.NewGetRequestWithCookies(url, s.cookies)
+	defer resp.Body.Close()
+	respBody := utils.GetBodyFromHttpResponse(resp.Body)
+
+	var response []interfaces.SearchStop
+	utils.ParseJsonBody(respBody, &response)
+	return response, nil
 }
