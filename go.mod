@@ -7,6 +7,8 @@ require (
 	github.com/joho/godotenv v1.5.1
 )
 
+require github.com/google/go-cmp v0.5.9 // indirect
+
 require (
 	github.com/bytedance/sonic v1.12.9 // indirect
 	github.com/bytedance/sonic/loader v0.2.3 // indirect
@@ -33,4 +35,5 @@ require (
 	golang.org/x/text v0.22.0 // indirect
 	google.golang.org/protobuf v1.36.5 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	gotest.tools/v3 v3.5.2
 )

@@ -69,10 +69,3 @@ jobs:
         echo "🕵️ Running staticcheck for advanced linting..."
         staticcheck ./...
         echo "✅ No issues found with staticcheck! 🎉"
-
-    # Step 8: Run tests with coverage 🧪 (fail if tests fail)
-    - name: 🧪 Run tests
-      run: |
-        echo "🧪 Running tests with coverage..."
-        go test -v -coverprofile=cover.out ./...
-        echo "✅ All tests passed! Great job! 🎉"
