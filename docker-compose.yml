@@ -9,3 +9,9 @@ services:
       - "8080:8080"
     env_file:
       - .env
+    volumes:
+      - ./cmd:/usr/src/app/cmd
+      - ./internal:/usr/src/app/internal
+      - ./external:/usr/src/app/external
+      - ./interfaces:/usr/src/app/interfaces
+      - ./utils:/usr/src/app/utils
