@@ -43,7 +43,3 @@ Follow these steps to get the project up and running:
 - **Docker** - Containerization
 - **CI/CD** - Continuous Integration & Deployment
 - **Clean Architecture** - Software design pattern
-
----
-Feel free to contribute or suggest improvements!
-
