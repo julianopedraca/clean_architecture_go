@@ -11,6 +11,15 @@ The project is structured into several layers:
   - **controller/**: Registers routes and includes tests.
   - **router/**: Sets up the Gin engine.
 
+## 🏗 Architecture Diagram
+```mermaid
+graph TD;
+    External["External (SPTrans API)"] -->|Uses| Interfaces["Interfaces (SPTrans API)"];
+    Interfaces -->|Communicates via| Internal["Internal Layer"];
+    Internal -->|Manages| Controller["Controller (Routes & Tests)"];
+    Internal -->|Manages| Router["Router (Gin Engine)"];
+```
+
 ## 🚀 Getting Started
 Follow these steps to get the project up and running:
 
@@ -34,4 +43,7 @@ Follow these steps to get the project up and running:
 - **Docker** - Containerization
 - **CI/CD** - Continuous Integration & Deployment
 - **Clean Architecture** - Software design pattern
+
+---
+Feel free to contribute or suggest improvements!
 
