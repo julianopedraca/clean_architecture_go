@@ -1,5 +1,5 @@
 # Default target
-.PHONY: push
+.PHONY: push start build
 
 # Push target that requires branch_name parameter
 push:
@@ -12,3 +12,9 @@ push:
 	git add .
 	git commit -m "$(branch_name)"
 	git push origin $(branch_name)
+
+start:
+	docker compose up
+
+build:
+	docker compose up --build	

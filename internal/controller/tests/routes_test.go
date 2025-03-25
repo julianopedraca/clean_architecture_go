@@ -29,7 +29,7 @@ func TestAuthentication(t *testing.T) {
 	assert.Equal(t, `{"response":"true"}`, w.Body.String(), `Expected result:"true"`)
 }
 
-// TODO: finish this test
+// TODO: this test isn't working because it is not saving the cookies that come as response from authentication
 func TestSearchLine(t *testing.T) {
 	os.Getenv("API_KEY")
 	os.Getenv("API_URL")
