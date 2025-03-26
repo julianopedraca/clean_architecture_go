@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SearchStops(c *gin.Context, api apiInterface.SptransApiInterface, stop string) {
+func SearchStops(c *gin.Context, api apiInterface.MobilityInterface, stop string) {
 	respBody, err := api.SearchStops(stop)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

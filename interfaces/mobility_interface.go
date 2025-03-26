@@ -18,7 +18,7 @@ type SearchStop struct {
 	Px float32
 }
 
-type SptransApiInterface interface {
+type MobilityInterface interface {
 	Authentication() ([]byte, error)
 	SearchLine(line string) ([]SearchLine, error)
 	SearchLineDirection(line string, direction string) ([]SearchLine, error)

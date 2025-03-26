@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SearchLine(c *gin.Context, api apiInterface.SptransApiInterface, line string) {
+func SearchLine(c *gin.Context, api apiInterface.MobilityInterface, line string) {
 	respBody, err := api.SearchLine(line)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

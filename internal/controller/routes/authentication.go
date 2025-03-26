@@ -8,7 +8,7 @@ import (
 	apiInterface "julianopedraca/clean_architecture_go/interfaces"
 )
 
-func Authentication(c *gin.Context, api apiInterface.SptransApiInterface) {
+func Authentication(c *gin.Context, api apiInterface.MobilityInterface) {
 	respBody, err := api.Authentication()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
