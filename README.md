@@ -6,7 +6,7 @@ This repository provides an example implementation of Clean Architecture in Go, 
 The project is structured into several layers:
 
 - **external/**: Implements the SPTrans API.
-- **interfaces/**: Defines interfaces for the SPTrans API.
+- **interfaces/**: Defines interfaces for the API.
 - **internal/**:
   - **controller/**: Registers routes and includes tests.
   - **router/**: Sets up the Gin engine.
